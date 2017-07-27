@@ -4,11 +4,32 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var facebookStrategy = require('passport-facebook').Strategy;
 
 function AppFactory(db){
 
   var index = require('./routes/index')(db);
   var users = require('./routes/users');
+
+  passport.use(new facebookStrategy({
+    clientID: process.env.CLIENT_ID||'1614155018629160',
+    clientSecret: process.env.CLIENT_SECRET||'79d48552b4ef05807d498bc23432d027',
+    callbackURL: 'http://demojqm.com:3000/login/facebook/return'
+    },
+    function(accessToken, refreshToken, profile, cb) {
+      // In this example, the user's Facebook profile is supplied as the user
+      // record.  In a production-quality application, the Facebook profile should
+      // be associated with a user record in the application's database, which
+      // allows for account linking and authentication with other identity
+      // providers.
+      
+      return cb(null, profile);
+    }
+  )
+);
+
+
 
   var app = express();
 
@@ -25,7 +46,22 @@ function AppFactory(db){
   app.use(require('less-middleware')(path.join(__dirname, 'public')));
   app.use(express.static(path.join(__dirname, 'public')));
 
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+
+  app.get('/login/facebook',
+    passport.authenticate('facebook'));
+
+  app.get('/login/facebook/return',
+    passport.authenticate('facebook', { failureRedirect: '/login/facebook' }),
+    function(req, res) {
+      res.redirect('/');
+    }
+  );
+
   app.use('/', index);
+
   app.use('/users', users);
 
   // catch 404 and forward to error handler

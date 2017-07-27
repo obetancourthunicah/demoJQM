@@ -7,6 +7,8 @@ $(document).on("mobileinit", function(e){
 
 }); // en mobileInit
 
+var storageAvaliable = (typeof(Storage) !== "undefined");
+
 function change_page(to) {
     $(":mobile-pagecontainer").pagecontainer("change", "#" + to);
 }
@@ -21,6 +23,9 @@ function hideLoading(){
 /// Este me permite verificar condiciones antes de
 //  inicializar una página no cargada
 $(document).on("pagebeforechange", function(e, data) {
+  if(!storageAvaliable){
+    window.location.assign('nojs.html');
+  }
   showLoading();
 }); // end PageBeforeChange
 // el evento analogo al form_load c# o vb .net donde se
@@ -30,26 +35,26 @@ $(document).on("pagecontainerbeforeshow", function(e, ui) {
 }); // en pagecontainerbeforeshow
 //
 
-
-
-$("#btnAjax").on('vclick', function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    $.get(
-      "http://localhost:3000/",
-      {},
-      function(data,sTxt,xhrq){
-        if(data){
-          var htmlNewDom = "";
-          var tmpOptions = data.map(
-            function(item, i){
-              return '<li><a href>' + item.title + '</a></li>';;
-            }
-          ); // map
-          htmlNewDom = tmpOptions.join('');
-          $("#main_list").html(htmlNewDom).listview("refresh");
-        }
-      },
-      'json'
-      )
-  });
+//
+//
+// $("#btnAjax").on('vclick', function(e){
+//     e.preventDefault();
+//     e.stopPropagation();
+//     $.get(
+//       "http://localhost:3000/",
+//       {},
+//       function(data,sTxt,xhrq){
+//         if(data){
+//           var htmlNewDom = "";
+//           var tmpOptions = data.map(
+//             function(item, i){
+//               return '<li><a href>' + item.title + '</a></li>';;
+//             }
+//           ); // map
+//           htmlNewDom = tmpOptions.join('');
+//           $("#main_list").html(htmlNewDom).listview("refresh");
+//         }
+//       },
+//       'json'
+//       )
+//   });

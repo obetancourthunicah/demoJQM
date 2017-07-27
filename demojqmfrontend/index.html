@@ -10,33 +10,84 @@
 </head>
 <body>
 
-  <div data-role="page" id="homePage" data-position="fixed">
-    <div data-role="header">
-      <h1>Encabezado</h1>
-    </div>
+<!--
+	landingPage
+	---Request Authentication
+	---Ongoin Games 10 juegos abiertos
+			  -- New Game --- Select Theme
+								-- Play Board
+				-- Join Ongoin Game
+						-- Game Summary
+							-- Play Board
+				-- Game History
+-->
+  <div data-role="page" id="landingPage" data-position="fixed">
+
     <div class="ui-content" role="main" >
-      <h1>Hola Mundo</h1>
-      <a href="#detailPage">Ir a Detalle</a>
-      <a href id="btnAjax">Cargar Ajax</a>
-				<ul data-role="listview" data-inset="true" id="main_list">
-					
-				</ul>
-    </div>
-    <div data-role="footer" data-position="fixed">
-      <h1>Derechos 2017</h1>
+			<div style="display:flex;align-items:center;justify-content:center;flex:1;">
+					<h1>Image Scrabble</h1>
+			</div>
+
     </div>
   </div>
 
-  <div data-role="page" id="detailPage" data-position="fixed">
-    <div data-role="header">
-      <h1>Detalle</h1>
-    </div>
+	<div data-role="page" id="gamelist" data-position="fixed">
+		<div data-role="header" data-position="fixed">
+			<h1>Juegos</h1>
+		</div>
     <div class="ui-content" role="main" >
-      <h1>Hola Mundo</h1>
+			<ul data-role="listview">
+				<li>
+					<a href>
+						<h2>Game Name 1</h2>
+					<p>Tema x</p></a>
+					</li>
+			</ul>
     </div>
-    <div data-role="footer" data-position="fixed">
-      <h1><a href="#homePage">Ir Atras</a></h1>
+		<div data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li>
+						<a href="#newgame">Crear Juego</a>
+					</li>
+					<li>
+						<a href>Mis Juegos</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+  </div>
+
+	<div data-role="page" id="newgame" data-position="fixed">
+		<div data-role="header" data-position="fixed">
+			<h1>Nuevo Juego</h1>
+		</div>
+    <div class="ui-content" role="main" >
+			<form>
+				<fieldset>
+					<label for="txtNewGame">Nombre del Juego</label>
+					<input type="text" name="txtNewGame" id="txtNewGame" />
+				</fieldset>
+				<fieldset>
+					<label for="cmbTheme">Tema del Juego</label>
+					<select name="cmbTheme" id="cmbTheme">
+						<option value="01">Vacaciones</option>
+					</select>
+				</fieldset>
+				<fieldset>
+					<button name="btnAddGame">Iniciar Juego</button>
+				</fieldset>
+			</form>
     </div>
+		<div data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li>
+						<a href="#gamelist">Regresar</a>
+					</li>
+				</ul>
+			</div>
+		</div>
   </div>
 
   <script src="js/app.js"></script>
